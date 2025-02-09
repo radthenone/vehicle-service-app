@@ -1,0 +1,67 @@
+services:
+  django:
+    container_name: django-vehicle-service
+    build:
+      context: ./backend
+      dockerfile: ./docker/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    env_file:
+      - .envs/.env.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/src:Z
+    networks:
+      - vehicle-service-network
+
+  postgres:
+    container_name: postgres-vehicle-service
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .envs/.env.postgres
+    ports:
+      - "5432:5432"
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 30
+    networks:
+      - vehicle-service-network
+
+  angular:
+    container_name: angular-vehicle-service
+    build:
+      context: ./frontend
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - ./frontend/node_modules:/app/node_modules
+    env_file:
+      - .envs/.env.frontend
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "-G", "http://localhost:4200/ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 30
+    networks:
+      - vehicle-service-network
+
+
+volumes:
+  postgres_data:
+    driver: local
+  node_modules:
+    driver: local
+
+networks:
+  vehicle-service-network:
+    driver: bridge
