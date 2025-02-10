@@ -40,6 +40,7 @@ BASIC_APPS = [
 ]
 
 PACKAGE_APPS = [
+    "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
 ]
@@ -56,6 +57,7 @@ INSTALLED_APPS = BASIC_APPS + PACKAGE_APPS + APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -149,9 +151,16 @@ REST_FRAMEWORK = {
     ],
 }
 
+# SIMPLE JWT
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ALGORITHM": str(os.environ.get("JWT_ALGORITHM")),
     "TOKEN_OBTAIN_SERIALIZER": "apps.auth.serializers.TokenSerializer",
 }
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+]
