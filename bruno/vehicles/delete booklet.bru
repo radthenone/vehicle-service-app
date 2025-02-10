@@ -1,0 +1,15 @@
+meta {
+  name: delete booklet
+  type: http
+  seq: 8
+}
+
+delete {
+  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/{{Booklet.id}}/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Auth.access}}
+}

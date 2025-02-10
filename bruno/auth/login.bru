@@ -1,0 +1,26 @@
+meta {
+  name: login
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{backendUrl}}/auth/login/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "{{User.username}}",
+    "password": "{{User.password}}"
+  }
+}
+
+script:post-response {
+  const response = res.getBody()
+  
+  console.log(res.getBody())
+  
+  bru.setVar("Auth", res.getBody())
+}

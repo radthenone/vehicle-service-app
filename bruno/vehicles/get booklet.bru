@@ -1,0 +1,15 @@
+meta {
+  name: get booklet
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/{{Booklet.id}}/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Auth.access}}
+}

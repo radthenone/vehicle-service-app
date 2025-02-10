@@ -1,0 +1,17 @@
+meta {
+  name: reffresh
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{backendUrl}}/auth/refresh/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "refresh": "{{Auth.refresh}}"
+  }
+}

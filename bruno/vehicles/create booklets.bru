@@ -1,0 +1,27 @@
+meta {
+  name: create booklets
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{Auth.access}}
+}
+
+body:json {
+  {
+    "mileage": 20000,
+    "description": "Some words",
+    "cost": 200.00
+  }
+}
+
+script:post-response {
+  bru.setVar("Booklet", res.getBody())
+}
