@@ -1,11 +1,11 @@
 meta {
-  name: get booklet
+  name: list booklet
   type: http
   seq: 5
 }
 
 get {
-  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/{{Booklet.id}}/
+  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/
   body: none
   auth: bearer
 }

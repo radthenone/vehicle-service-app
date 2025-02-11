@@ -1,11 +1,11 @@
 meta {
-  name: delete booklet
+  name: delete
   type: http
-  seq: 8
+  seq: 4
 }
 
 delete {
-  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/{{Booklet.id}}/
+  url: {{backendUrl}}/booklets/{{Booklet.id}}/
   body: none
   auth: bearer
 }

@@ -1,11 +1,11 @@
 meta {
-  name: create booklets
+  name: create
   type: http
-  seq: 7
+  seq: 3
 }
 
 post {
-  url: {{backendUrl}}/vehicles/{{Vehicle.id}}/booklets/
+  url: {{backendUrl}}/booklets/
   body: json
   auth: bearer
 }
@@ -16,6 +16,7 @@ auth:bearer {
 
 body:json {
   {
+    "vehicle": "{{Vehicle.id}}",
     "mileage": 20000,
     "description": "Some words",
     "cost": 200.00
