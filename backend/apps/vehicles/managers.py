@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Optional
 
-from django.db import models
+from django.db import models, transaction
 from django.db.models import QuerySet
 
 if TYPE_CHECKING:
@@ -22,7 +22,19 @@ class VehicleManager(models.Manager):
             raise ValueError("Vehicle does not exist")
 
     def get_vehicles_by_user(self, user: "User") -> QuerySet["Vehicle"]:
-        return self.select_related("user").filter(user=user)
+        return (
+            self.select_related("user").prefetch_related("booklets").filter(user=user)
+        )
+
+    def get_vehicle_booklets_by_id(
+        self, user: "User", vehicle_id: int
+    ) -> QuerySet["Vehicle"]:
+        return (
+            self.select_related("user")
+            .prefetch_related("booklets")
+            .get(user=user, id=vehicle_id)
+            .booklets.all()
+        )
 
     def create_vehicle(
         self,
@@ -34,15 +46,16 @@ class VehicleManager(models.Manager):
         **kwargs,
     ) -> Optional["Vehicle"]:
         try:
-            vehicle = self.model(
-                user=user,
-                name=name,
-                model=model,
-                year=year,
-                vin=vin,
-                **kwargs,
-            )
-            vehicle.save()
-            return vehicle
+            with transaction.atomic():
+                vehicle = self.model(
+                    user=user,
+                    name=name,
+                    model=model,
+                    year=year,
+                    vin=vin,
+                    **kwargs,
+                )
+                vehicle.save()
+                return vehicle
         except Exception as error:
             raise ValueError(f"Could not create vehicle. Error: {error}")

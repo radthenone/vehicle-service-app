@@ -3,11 +3,13 @@ from decimal import Decimal
 from rest_framework import serializers
 
 from apps.service_booklets.models import ServiceBooklet
-from apps.vehicles.serializers import VehicleSerializer
+from apps.vehicles.models import Vehicle
 
 
 class ServiceBookletSerializer(serializers.ModelSerializer):
-    vehicle = VehicleSerializer(read_only=True)
+    vehicle = serializers.PrimaryKeyRelatedField(
+        queryset=Vehicle.objects.prefetch_related("booklets")
+    )
 
     class Meta:
         model = ServiceBooklet
@@ -19,10 +21,12 @@ class ServiceBookletSerializer(serializers.ModelSerializer):
             "cost",
             # nested
             "vehicle",
+            "vehicle_id",
         ]
         read_only_fields = [
             "id",
             "date",
+            "vehicle",
         ]
 
     def validate_mileage(self, value) -> int:  # noqa
@@ -48,5 +52,6 @@ class ServiceBookletSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
+        data.pop("vehicle_id")
         data.pop("vehicle")
         return data

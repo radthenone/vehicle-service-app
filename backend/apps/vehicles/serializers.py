@@ -1,10 +1,13 @@
 from django.utils import timezone
 from rest_framework import serializers
 
+from apps.service_booklets.serializers import ServiceBookletSerializer
 from apps.vehicles.models import Vehicle
 
 
 class VehicleSerializer(serializers.ModelSerializer):
+    booklets = ServiceBookletSerializer(many=True, read_only=True)
+
     class Meta:
         model = Vehicle
         fields = [
@@ -15,6 +18,7 @@ class VehicleSerializer(serializers.ModelSerializer):
             "vin",
             # nested
             "user",
+            "booklets",
         ]
         extra_kwargs = {
             "name": {"required": True},

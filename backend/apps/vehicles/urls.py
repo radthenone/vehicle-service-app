@@ -1,7 +1,10 @@
 from django.urls import path
 
-from apps.service_booklets.views import ServiceBookletDetailView, ServiceBookletView
-from apps.vehicles.views import VehicleDetailView, VehicleView
+from apps.vehicles.views import (
+    VehicleBookletListView,
+    VehicleDetailView,
+    VehicleView,
+)
 
 urlpatterns = [
     path(
@@ -16,12 +19,7 @@ urlpatterns = [
     ),
     path(
         "<int:vehicle_id>/booklets/",
-        ServiceBookletView.as_view(),
-        name="booklet-list-create",
-    ),
-    path(
-        "<int:vehicle_id>/booklets/<int:booklet_id>/",
-        ServiceBookletDetailView.as_view(),
-        name="booklet-detail",
+        VehicleBookletListView.as_view(),
+        name="vehicle-booklets",
     ),
 ]
