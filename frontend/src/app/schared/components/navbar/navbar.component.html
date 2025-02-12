@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/">Vehicle Service</a>
+  </div>
+  <div class="navbar-links">
+    <a routerLink="/vehicles">Vehicles</a>
+    <a routerLink="/service-booklets">Service Booklets</a>
+  </div>
+  <div class="navbar-auth">
+    <!--    <div *ngIf="authService.isLoggedIn(); else notLoggedIn">-->
+    <!--      <button class="logout-button" (click)="logout()">Logout</button>-->
+  </div>
+  <ng-template #notLoggedIn>
+    <a routerLink="/login" class="auth-link">Login</a>
+    <a routerLink="/register" class="auth-link">Register</a>
+  </ng-template>
+  <!--  </div>-->
+</nav>

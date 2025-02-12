@@ -1,0 +1,21 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username</label>
+    <input id="username" formControlName="username" type="text" autocomplete="on" />
+    <div *ngIf="submitted && field.username.errors">
+      <div *ngIf="field.username.errors?.['required']">Username is required.</div>
+      <div *ngIf="field.username.errors?.['minlength']">Minimum length is 5.</div>
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" autocomplete="on" />
+    <div *ngIf="submitted && field.password.errors">
+      <div *ngIf="field.password.errors?.['required']">Password is required.</div>
+      <div *ngIf="field.password.errors?.['minlength']">Minimum length is 8.</div>
+    </div>
+  </div>
+
+  <button type="submit">Login</button>
+</form>
