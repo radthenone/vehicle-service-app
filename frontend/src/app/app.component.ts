@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 
 @Component({
@@ -6,20 +6,21 @@ import { AuthService } from './auth/services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   currentUsername: string | undefined = undefined;
   isAuthenticated = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
     this.authService.currentUser$.subscribe((user) => {
       this.currentUsername = user?.username;
       this.isAuthenticated = !!user;
     });
   }
 
-  onEventLogout(event: void): void {
+  onLogout(event: void): void {
     console.log('User logged out', event);
-    this.currentUsername = undefined;
-    this.isAuthenticated = false;
+    this.authService.logout();
   }
 }

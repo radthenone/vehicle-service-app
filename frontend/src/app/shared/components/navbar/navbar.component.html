@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-md navbar-light custom-navbar">
+  <a class="navbar-brand" [routerLink]="['/']">Vehicle Service</a>
+  <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-links" *ngIf="isAuthenticated">
+      <a [routerLink]="['/vehicles']" class="nav-link">Vehicles</a>
+      <a [routerLink]="['/booklets']" class="nav-link">Booklets</a>
+    </div>
+
+    <div class="navbar-auth">
+      <ng-container *ngIf="isAuthenticated; else notAuthenticated">
+        <p>Hello: {{ username }}</p>
+        <button (click)="logout()">Logout</button>
+      </ng-container>
+      <ng-template #notAuthenticated>
+        <div class="navbar-non-auth">
+          <a [routerLink]="['/register']" class="nav-link">Register</a>
+          <a [routerLink]="['/login']" class="nav-link">Login</a>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</nav>

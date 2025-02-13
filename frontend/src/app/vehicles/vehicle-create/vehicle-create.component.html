@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h2 class="text-center mb-4">Create Vehicle</h2>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input id="name" formControlName="name" type="text" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.name.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.name.errors?.['required']">Name is required.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="model" class="form-label">Model</label>
+            <input id="model" formControlName="model" type="text" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.model.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.model.errors?.['required']">Model is required.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input id="year" formControlName="year" type="number" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.year.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.year.errors?.['required']">Year is required.</div>
+              <div *ngIf="field.year.errors?.['min']">Year must be greater than 1800.</div>
+              <div *ngIf="field.year.errors?.['max']">Year must be less than the current year.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="vin" class="form-label">VIN</label>
+            <input id="vin" formControlName="vin" type="text" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.vin.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.vin.errors?.['required']">VIN is required.</div>
+              <div *ngIf="field.vin.errors?.['pattern']">VIN must be alphanumeric and uppercase.</div>
+              <div *ngIf="field.vin.errors?.['minlength']">VIN must be at least 17 characters long.</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Create Vehicle</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div class="col-md-6 offset-md-3 d-flex justify-content-end">
+      <button [routerLink]="['/vehicles']" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to Vehicles List
+      </button>
+    </div>
+  </div>
+</div>

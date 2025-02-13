@@ -8,6 +8,9 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgOptimizedImage } from '@angular/common';
+import { VehiclesModule } from './vehicles/vehicles.module';
+import { BookletsModule } from './service-booklets/service-booklets.module';
+import { SharedModule } from './shared/components/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +21,10 @@ import { NgOptimizedImage } from '@angular/common';
     ReactiveFormsModule,
     AppRoutingModule,
     AuthModule,
+    VehiclesModule,
+    BookletsModule,
     NgOptimizedImage,
+    SharedModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
