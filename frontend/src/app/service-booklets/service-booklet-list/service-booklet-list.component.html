@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <app-search (search)="onSearch($event)"></app-search>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let booklet of filteredBooklets">
+          <div *ngIf="booklet.id">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ booklet.date }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Mileage: {{ booklet.mileage }}</h6>
+                <p class="card-text">{{ booklet.description }}</p>
+                <p class="card-text">Cost: {{ booklet.cost }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <button
+                      [routerLink]="['/booklets', booklet.id]"
+                      class="btn btn-primary btn-sm me-2"
+                    >
+                      <i class="fas fa-info-circle"></i> Show Booklet
+                    </button>
+                  </div>
+                  <button
+                    (click)="onDeleteBooklet(booklet.id)"
+                    class="btn btn-danger btn-sm"
+                  >
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

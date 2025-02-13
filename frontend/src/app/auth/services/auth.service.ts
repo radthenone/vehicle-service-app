@@ -20,10 +20,22 @@ export class AuthService {
     this.loadUser();
   }
 
+  public setSelectedUser(user: User) {
+    this.currentUserSubject.next(user);
+  }
+
+  public selectedUser(): User | null {
+    return this.currentUserSubject.value;
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('accessToken');
+  }
+
   private loadUser(): void {
     const user = localStorage.getItem('currentUser');
     if (user) {
-      this.currentUserSubject.next(JSON.parse(user));
+      this.setSelectedUser(JSON.parse(user));
     }
   }
 
@@ -80,10 +92,6 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
-  }
-
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('accessToken');
   }
 
   getAccessToken(): string | null {

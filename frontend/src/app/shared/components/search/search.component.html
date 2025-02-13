@@ -1,0 +1,11 @@
+<form class="form-inline my-2 my-lg-0 d-flex justify-content-between">
+  <input
+    class="form-control mr-sm-2"
+    type="search"
+    aria-label="Search"
+    [(ngModel)]="searchTerm"
+    (input)="onSearch($event)"
+    name="search"
+  />
+  <button class="btn btn-outline-success my-2 my-sm-0 bg-success text-white" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+</form>

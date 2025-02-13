@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="serviceBookletForm" (ngSubmit)="onSubmit()" class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h2 class="text-center mb-4">Create Service Booklet</h2>
+
+          <div class="mb-3">
+            <label for="mileage" class="form-label">Mileage</label>
+            <input id="mileage" formControlName="mileage" type="number" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.mileage.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.mileage.errors?.['required']">Mileage is required.</div>
+              <div *ngIf="field.mileage.errors?.['min']">Mileage must be greater than 1.</div>
+              <div *ngIf="field.mileage.errors?.['pattern']">Mileage must be numeric.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input id="description" formControlName="description" type="text" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.description.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.description.errors?.['required']">Description is required.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="cost" class="form-label">Cost</label>
+            <input id="cost" formControlName="cost" type="number" autocomplete="on" class="form-control" />
+            <div *ngIf="submitted && field.cost.errors" class="invalid-feedback d-block">
+              <div *ngIf="field.cost.errors?.['required']">Cost is required.</div>
+              <div *ngIf="field.cost.errors?.['min']">Cost must be greater than 5.00.</div>
+              <div *ngIf="field.cost.errors?.['pattern']">Cost must be numeric min with 2 decimal places.</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Create Service Booklet</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div class="col-md-6 offset-md-3 d-flex justify-content-end">
+      <button [routerLink]="['/booklets']" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to Booklet List
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="vehicle">
+    <h2 class="mb-4 text-center">Vehicle Details</h2>
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ vehicle.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ vehicle.model }} ({{ vehicle.year }})</h6>
+        <p class="card-text">VIN: {{ vehicle.vin }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <button (click)="deleteVehicle()" class="btn btn-danger btn-sm me-2">
+              <i class="fas fa-trash-alt"></i> Delete Vehicle
+            </button>
+          </div>
+          <button [routerLink]="['/vehicles']" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Back to Vehicle List
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12" *ngIf="booklets">
+    <h2 class="mb-4 text-center">Vehicle Booklets</h2>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let booklet of booklets">
+        <div *ngIf="booklet.id">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ booklet.date }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Mileage: {{ booklet.mileage }}</h6>
+              <p class="card-text">{{ booklet.description }}</p>
+              <p class="card-text">Cost: {{ booklet.cost }}</p>
+              <div class="d-flex justify-content-end">
+                <button [routerLink]="['/booklets', booklet.id]" class="btn btn-primary btn-sm">
+                  <i class="fas fa-info-circle"></i> Show Booklet
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,20 +1,11 @@
-<!-- app.component.html -->
 <header>
-  <nav class="navbar">
-    <div class="navbar-logo">
-      <img ngSrc="assets/logo.png" width="50" height="100" priority />
-    </div>
-    <ul class="navbar-links">
-      <li><a *ngIf="!isAuthenticated" routerLink="/login">Login</a></li>
-      <li><a *ngIf="!isAuthenticated" routerLink="/register">Register</a></li>
-    </ul>
-    <div class="navbar-actions">
-      <app-logout *ngIf="isAuthenticated" (logoutEvent)="onEventLogout($event)">Logout</app-logout>
-    </div>
-  </nav>
+  <app-navbar [username]="currentUsername" [isAuthenticated]="isAuthenticated" (logoutEvent)="onLogout($event)" />
 </header>
 
 <main>
-  {{ currentUsername }}
-  <router-outlet></router-outlet>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </main>
+
+<footer class="text-center">Created for NotBug</footer>

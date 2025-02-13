@@ -1,0 +1,153 @@
+.custom-navbar {
+  background-color: #3498db;
+  padding: 0.5rem 1rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-collapse {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #1abc9c;
+}
+
+.navbar-auth {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-auth p {
+  color: white;
+  margin: 0;
+}
+
+.navbar-auth button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-auth button:hover {
+  background-color: #c0392b;
+}
+
+.navbar-toggler {
+  border: none;
+  background-color: transparent;
+  color: white;
+
+}
+
+.navbar-collapse.show {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #3498db;
+  padding: 1rem;
+  z-index: 1000;
+  box-shadow: none;
+}
+
+.navbar-collapse.show .navbar-links,
+.navbar-collapse.show .navbar-auth {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.navbar-collapse.show .navbar-links a,
+.navbar-collapse.show .navbar-auth a,
+.navbar-collapse.show .navbar-auth button {
+  margin-bottom: 0.5rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0;
+  background-color: transparent;
+  color: white;
+}
+
+.navbar-collapse.show .navbar-links a:hover,
+.navbar-collapse.show .navbar-auth a:hover,
+.navbar-collapse.show .navbar-auth button:hover {
+  background-color: darkgreen;
+}
+
+.navbar-non-auth {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-non-auth a {
+  color: white;
+  margin: 0;
+}
+
+.navbar-non-auth button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-non-auth button:hover {
+  background-color: #c0392b;
+}
