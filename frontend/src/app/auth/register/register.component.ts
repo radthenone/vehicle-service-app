@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
   loading = false;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -31,7 +32,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       username: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
+      ]),
       confirmPassword: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.email]),
       first_name: new FormControl(''),
@@ -46,10 +51,12 @@ export class RegisterComponent implements OnInit {
       const confirmPassword = group.get('confirmPassword');
 
       if (password && confirmPassword && password.value !== confirmPassword.value) {
+        confirmPassword.setErrors({ mismatch: true });
         return { mismatch: true };
+      } else {
+        confirmPassword?.setErrors(null);
+        return null;
       }
-
-      return null;
     };
   }
 
@@ -81,6 +88,12 @@ export class RegisterComponent implements OnInit {
         error: (error) => {
           console.error('Registration error', error);
           this.loading = false;
+
+          if (error.status === 400) {
+            this.errorMessage = 'Username already exists. Please choose a different username.';
+          } else {
+            this.errorMessage = 'An error occurred during registration. Please try again later.';
+          }
           this.registerForm.reset();
         },
       });

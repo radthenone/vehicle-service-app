@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../../vehicles/vehicle.service';
-import { Vehicle, VehicleControls } from '../../vehicles/vehicle.interface';
+import { Vehicle } from '../../vehicles/vehicle.interface';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ServiceBooklet, ServiceBookletControls, ServiceBookletForm } from '../service-booklet.interface';
+import { ServiceBooklet, ServiceBookletControls } from '../service-booklet.interface';
 import { ServiceBookletService } from '../service-booklet.service';
 
 @Component({
@@ -15,6 +15,8 @@ export class ServiceBookletCreateComponent implements OnInit {
   vehicle!: Vehicle;
   serviceBookletForm!: FormGroup;
   submitted = false;
+  errorMessage: string | null = null;
+
   constructor(
     private fb: FormBuilder,
     private vehicleService: VehicleService,
@@ -44,7 +46,17 @@ export class ServiceBookletCreateComponent implements OnInit {
       const newServiceBooklet: ServiceBooklet = this.serviceBookletForm.value;
       this.serviceBookletService.createBooklet(newServiceBooklet).subscribe({
         next: () => this.router.navigate(['/booklets']),
-        error: (error) => console.error(error),
+        error: (error) => {
+          console.error(error);
+          if (error.status === 400) {
+            this.errorMessage = 'Mileage already exists. Please choose a different mileage.';
+          } else {
+            if (!this.vehicle) {
+              this.router.navigate(['/vehicles']);
+            }
+            this.errorMessage = 'An error occurred during service booklet creation. Please try again later.';
+          }
+        },
       });
     }
   }

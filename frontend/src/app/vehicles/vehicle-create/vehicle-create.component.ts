@@ -12,6 +12,7 @@ import { VehicleControls, Vehicle } from '../vehicle.interface';
 export class VehicleCreateComponent implements OnInit {
   vehicleForm!: FormGroup;
   submitted = false;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -24,7 +25,10 @@ export class VehicleCreateComponent implements OnInit {
       name: ['', [Validators.required]],
       model: ['', [Validators.required]],
       year: [null, [Validators.required, Validators.min(1800), Validators.max(new Date().getFullYear())]],
-      vin: ['', [Validators.required, Validators.pattern('^[A-Z0-9]+$'), Validators.minLength(17)]],
+      vin: [
+        '',
+        [Validators.required, Validators.pattern('^[A-Z0-9]+$'), Validators.minLength(17), Validators.maxLength(17)],
+      ],
     });
   }
 
@@ -38,7 +42,14 @@ export class VehicleCreateComponent implements OnInit {
       const newVehicle: Vehicle = this.vehicleForm.value;
       this.vehicleService.createVehicle(newVehicle).subscribe({
         next: () => this.router.navigate(['/vehicles']),
-        error: (error) => console.error(error),
+        error: (error) => {
+          console.error(error);
+          if (error.status === 400) {
+            this.errorMessage = 'VIN already exists. Please choose a different VIN.';
+          } else {
+            this.errorMessage = 'An error occurred during vehicle creation. Please try again later.';
+          }
+        },
       });
     }
   }

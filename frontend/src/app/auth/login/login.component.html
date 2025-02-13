@@ -23,6 +23,9 @@
                 <div *ngIf="field.password.errors?.['minlength']">Minimum length is 8.</div>
               </div>
             </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
 
             <button type="submit" class="btn btn-primary w-100">Login</button>
           </div>

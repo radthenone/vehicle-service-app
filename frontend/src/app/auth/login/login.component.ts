@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted = false;
   loading = false;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -44,6 +45,12 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           console.error('Login error', error);
           this.loading = false;
+          if (error.status === 401) {
+            this.errorMessage = 'Wrong username or password. Please try again.';
+          } else {
+            this.errorMessage = 'An error occurred during login. Please try again later.';
+          }
+
           this.loginForm.reset();
         },
       });

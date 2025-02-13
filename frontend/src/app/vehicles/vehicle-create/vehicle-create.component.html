@@ -23,7 +23,7 @@
 
           <div class="mb-3">
             <label for="year" class="form-label">Year</label>
-            <input id="year" formControlName="year" type="number" autocomplete="on" class="form-control" />
+            <input type="number" id="year" formControlName="year" min="1801" max="2100" class="form-control" />
             <div *ngIf="submitted && field.year.errors" class="invalid-feedback d-block">
               <div *ngIf="field.year.errors?.['required']">Year is required.</div>
               <div *ngIf="field.year.errors?.['min']">Year must be greater than 1800.</div>
@@ -37,8 +37,14 @@
             <div *ngIf="submitted && field.vin.errors" class="invalid-feedback d-block">
               <div *ngIf="field.vin.errors?.['required']">VIN is required.</div>
               <div *ngIf="field.vin.errors?.['pattern']">VIN must be alphanumeric and uppercase.</div>
-              <div *ngIf="field.vin.errors?.['minlength']">VIN must be at least 17 characters long.</div>
+              <div *ngIf="field.vin.errors?.['minlength'] || field.vin.errors?.['maxlength']">
+                VIN must be at 17 characters long.
+              </div>
             </div>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
           </div>
 
           <button type="submit" class="btn btn-primary w-100">Create Vehicle</button>

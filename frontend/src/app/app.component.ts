@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
+import { Vehicle } from './vehicles/vehicle.interface';
+import { VehicleService } from './vehicles/vehicle.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,17 @@ export class AppComponent implements OnInit {
   currentUsername: string | undefined = undefined;
   isAuthenticated = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private vehicleService: VehicleService
+  ) {}
 
   ngOnInit() {
     this.authService.currentUser$.subscribe((user) => {
       this.currentUsername = user?.username;
       this.isAuthenticated = !!user;
     });
+    this.vehicleService.selectedVehicle$.subscribe();
   }
 
   onLogout(event: void): void {
