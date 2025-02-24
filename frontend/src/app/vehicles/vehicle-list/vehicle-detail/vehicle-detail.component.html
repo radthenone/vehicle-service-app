@@ -45,3 +45,5 @@
     </ul>
   </div>
 </div>
+<input [(ngModel)]="filename" />
+<button [disabled]="filename === ''" (click)="downloadCsv()">Pobierz CSV</button>

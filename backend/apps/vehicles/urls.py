@@ -4,6 +4,7 @@ from apps.vehicles.views import (
     VehicleBookletListView,
     VehicleDetailView,
     VehicleView,
+    VehicleDetailCvsView,
 )
 
 urlpatterns = [
@@ -17,6 +18,14 @@ urlpatterns = [
         VehicleDetailView.as_view(),
         name="vehicle-detail",
     ),
+    # path('vehicles/<str:vehicle_id>/csv/?format=csv', VehicleDetailCvsView.as_view(), name='vehicle-csv'),
+    path(
+        "<int:vehicle_id>/booklets/",
+        VehicleBookletListView.as_view(),
+        name="vehicle-booklets",
+    ),
+    path('<int:vehicle_id>/csv/', VehicleDetailCvsView.as_view(), name='vehicle-csv'),
+
     path(
         "<int:vehicle_id>/booklets/",
         VehicleBookletListView.as_view(),

@@ -45,6 +45,23 @@ export class VehicleService {
     );
   }
 
+  downloadVehicleDataCsv(id: string): Observable<Blob> {
+    return this.http
+      .get(`${this.vehicleUrl}${id}/csv/`, {
+        responseType: 'blob',
+        headers: {
+          Accept: 'text/csv',
+          'Content-Type': 'text/csv',
+        },
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('CSV download error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
   getVehicleBooklets(id: number): Observable<Omit<ServiceBooklet, 'vehicle'>[]> {
     return this.http.get<any[]>(`${this.vehicleUrl}${id}/booklets/`).pipe(
       catchError((error: HttpErrorResponse) => {
